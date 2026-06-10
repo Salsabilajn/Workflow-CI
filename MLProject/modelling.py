@@ -41,11 +41,15 @@ parser.add_argument("learning_rate", type=float, nargs="?", default=0.1)
 args = parser.parse_args()
 
 # ── DagsHub Tracking ───────────────────────────────────────
-os.environ["DAGSHUB_USER_TOKEN"] = os.getenv("DAGSHUB_TOKEN", "")
-dagshub.init(
-    repo_owner=os.getenv("DAGSHUB_USERNAME"),
-    repo_name="HeartDisease-MLProject",
-    mlflow=True
+# ── DagsHub Tracking ───────────────────────────────────────
+dagshub_username = os.getenv("DAGSHUB_USERNAME", "Salsabilajn")
+dagshub_token = os.getenv("DAGSHUB_TOKEN", "")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_username
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+
+mlflow.set_tracking_uri(
+    f"https://dagshub.com/Salsabilajn/HeartDisease-MLProject.mlflow"
 )
 
 # ── Load data ───────────────────────────────────────────────
