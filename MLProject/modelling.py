@@ -9,11 +9,8 @@ Contoh:
 """
 
 import argparse
-import json
 import os
-import sys
 
-import dagshub
 import mlflow
 import mlflow.sklearn
 import matplotlib
@@ -24,13 +21,11 @@ import pandas as pd
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import (
     accuracy_score,
-    classification_report,
     confusion_matrix,
     f1_score,
     precision_score,
     recall_score,
     roc_auc_score,
-    roc_curve,
 )
 
 # ── CLI Arguments ──────────────────────────────────────────
@@ -41,15 +36,14 @@ parser.add_argument("learning_rate", type=float, nargs="?", default=0.1)
 args = parser.parse_args()
 
 # ── DagsHub Tracking ───────────────────────────────────────
-# ── DagsHub Tracking ───────────────────────────────────────
 dagshub_username = os.getenv("DAGSHUB_USERNAME", "Salsabilajn")
-dagshub_token = os.getenv("DAGSHUB_TOKEN", "")
+dagshub_token    = os.getenv("DAGSHUB_TOKEN", "")
 
 os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_username
 os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
 mlflow.set_tracking_uri(
-    f"https://dagshub.com/Salsabilajn/HeartDisease-MLProject.mlflow"
+    f"https://dagshub.com/{dagshub_username}/HeartDisease-MLProject.mlflow"
 )
 
 # ── Load data ───────────────────────────────────────────────
@@ -90,7 +84,7 @@ with mlflow.start_run(run_name=f"CI-GBM-n{args.n_estimators}-d{args.max_depth}")
     mlflow.log_metric("recall",    rec)
     mlflow.log_metric("roc_auc",   auc)
 
-    # Confusion Matrix artefak
+    # Confusion Matrix
     cm = confusion_matrix(y_test, y_pred)
     fig, ax = plt.subplots(figsize=(5, 4))
     ax.imshow(cm, cmap="OrRd")
