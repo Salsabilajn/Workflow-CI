@@ -32,8 +32,7 @@ jobs:
           DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
         run: |
-          cd MLProject
-          python modelling.py 150 4 0.1
+          mlflow run MLProject --env-manager=local -P n_estimators=150 -P max_depth=4 -P learning_rate=0.1
 
       - name: Print latest run ID
         run: cat MLProject/latest_run_id.txt

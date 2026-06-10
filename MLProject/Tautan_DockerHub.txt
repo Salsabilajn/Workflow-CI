@@ -1,5 +1,5 @@
 Tautan Docker Hub Image:
-https://hub.docker.com/r/<your_dockerhub_username>/heartdisease-model
+https://hub.docker.com/r/salsabila29/heartdisease-model
 
 Tag: latest
 
