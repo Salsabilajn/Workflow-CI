@@ -1,0 +1,10 @@
+Tautan Docker Hub Image:
+https://hub.docker.com/r/<your_dockerhub_username>/heartdisease-model
+
+Tag: latest
+
+Cara pull image:
+    docker pull <your_dockerhub_username>/heartdisease-model:latest
+
+Cara run model serving:
+    docker run -p 5002:5002 <your_dockerhub_username>/heartdisease-model:latest
