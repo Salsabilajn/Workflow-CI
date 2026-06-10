@@ -42,10 +42,6 @@ dagshub_token    = os.getenv("DAGSHUB_TOKEN", "")
 os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_username
 os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
-mlflow.set_tracking_uri(
-    f"https://dagshub.com/{dagshub_username}/HeartDisease-MLProject.mlflow"
-)
-
 # ── Load data ───────────────────────────────────────────────
 X_train = pd.read_csv("heart_preprocessing/X_train.csv")
 X_test  = pd.read_csv("heart_preprocessing/X_test.csv")
@@ -55,8 +51,6 @@ y_test  = pd.read_csv("heart_preprocessing/y_test.csv").squeeze()
 print(f"[DATA] Train: {X_train.shape} | Test: {X_test.shape}")
 
 # ── Training ────────────────────────────────────────────────
-mlflow.set_experiment("HeartDisease-CI")
-
 with mlflow.start_run(run_name=f"CI-GBM-n{args.n_estimators}-d{args.max_depth}") as run:
     mlflow.log_param("n_estimators",  args.n_estimators)
     mlflow.log_param("max_depth",     args.max_depth)
